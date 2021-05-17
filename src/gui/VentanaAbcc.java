@@ -5,17 +5,79 @@
  */
 package gui;
 
+import DAO.Controlador;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Felipe
  */
 public class VentanaAbcc extends javax.swing.JFrame {
 
+    
+    static ResultSet res;
     /**
      * Creates new form VentanaAbcc
      */
     public VentanaAbcc() {
         initComponents();
+        try {
+            CargarTabla();
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaAbcc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setLocationRelativeTo(null);
+    }
+    
+    public void CargarTabla() throws SQLException{
+        DefaultTableModel modelo = (DefaultTableModel) tablaClient.getModel();
+        modelo.setRowCount(0); 
+        res = Controlador.buscarRegistro("Select * from client");
+        try {
+            while(res.next()){
+                Vector v = new Vector();
+                v.add(res.getInt(1));
+                v.add(res.getString(2));
+                v.add(res.getString(3));
+                v.add(res.getString(4));
+                v.add(res.getString(5));
+                v.add(res.getInt(6));
+                v.add(res.getString(7));
+                modelo.addRow(v);
+                tablaClient.setModel(modelo);
+                
+            }
+        } catch (SQLException e) {
+            
+            
+        }
+    }
+        public void CargarTablaEspecifica(String clave) throws SQLException{
+            DefaultTableModel modelo = (DefaultTableModel) tablaClient.getModel();
+        modelo.setRowCount(0);
+        res = Controlador.buscarRegistro("Select * from client where clientNo ='" + clave +"'");
+        
+        try {
+            while(res.next()){
+                Vector v = new Vector();
+                v.add(res.getString(1));
+                v.add(res.getString(2));
+                v.add(res.getInt(3));
+                v.add(res.getString(4));
+                v.add(res.getString(5));
+                modelo.addRow(v);
+                tablaClient.setModel(modelo);
+                
+            }
+        } catch (SQLException e) {
+            
+            
+        }
     }
 
     /**
@@ -28,16 +90,23 @@ public class VentanaAbcc extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tablaClient = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablaClient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -48,21 +117,42 @@ public class VentanaAbcc extends javax.swing.JFrame {
                 "clientNo", "fName", "lName", "telNo", "prefType", "maxRent", "email"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tablaClient);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 610, 152));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 750, 152));
 
         jTextField1.setText("jTextField1");
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 110, 30));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 110, 30));
 
         jLabel1.setText("Agregar");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 80, 40, 40));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, 40, 40));
 
         jLabel2.setText("Editar");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 80, 40, 40));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 40, 40, 40));
 
         jLabel3.setText("Eliminar");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 80, 40, 40));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 40, 40));
+
+        jTextField2.setText("jTextField2");
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+
+        jTextField3.setText("jTextField3");
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, -1, -1));
+
+        jTextField4.setText("jTextField4");
+        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 180, -1, -1));
+
+        jTextField5.setText("jTextField5");
+        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, -1, -1));
+
+        jTextField6.setText("jTextField6");
+        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, -1, -1));
+
+        jTextField7.setText("jTextField7");
+        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, -1, -1));
+
+        jTextField8.setText("jTextField8");
+        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 180, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -107,7 +197,14 @@ public class VentanaAbcc extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTable tablaClient;
     // End of variables declaration//GEN-END:variables
 }
