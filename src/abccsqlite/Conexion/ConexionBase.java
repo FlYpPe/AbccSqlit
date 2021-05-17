@@ -9,9 +9,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexionBase {
-    public static Connection connect() {
-    Connection con = null; 
-    try {
+    public static Connection con; 
+    public static Connection getconn() {
+    if (con == null){
+        try {
    
       Class.forName("org.sqlite.JDBC");
       con = DriverManager.getConnection("jdbc:sqlite:C:/Users/Felipe/Documents/NetBeansProjects/AbccSqlit/src/BaseDatos.db"); // connecting to our database
@@ -20,6 +21,8 @@ public class ConexionBase {
      
       System.out.println(e+"");
     }
+    }
+    
     
     return con; 
   }
