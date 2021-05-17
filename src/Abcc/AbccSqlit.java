@@ -1,5 +1,5 @@
 
-package abccsqlit;
+package Abcc;
 
 import abccsqlite.Conexion.ConexionBase;
 import java.sql.Connection;
@@ -20,7 +20,7 @@ public class AbccSqlit {
     }
     
     private static void insert(String firstName, String secondName) {
-  Connection con = ConexionBase.connect();
+  Connection con = ConexionBase.getconn();
   PreparedStatement ps = null; 
   try {
     String sql = "INSERT INTO inicio(nombre, numero) VALUES(?,?) ";
