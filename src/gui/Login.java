@@ -107,7 +107,7 @@ public class Login extends javax.swing.JFrame {
             String sql = "select * from user where user = '" + user.getText() + "'";
         try {
             if (Controlador.validar(sql, campoPass.getText())) {
-                VentanaAbcc vent = new VentanaAbcc();
+                VentanaClientes vent = new VentanaClientes();
                 vent.setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(null, "Conexión fallida");
@@ -135,7 +135,7 @@ public class Login extends javax.swing.JFrame {
         try {
             if (Controlador.validar(sql, campoPass.getText())) {
                 
-                VentanaAbcc vent = new VentanaAbcc();
+                VentanaClientes vent = new VentanaClientes();
                  
                 vent.setVisible(true);
                  
