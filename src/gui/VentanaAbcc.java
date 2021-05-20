@@ -92,29 +92,28 @@ public class VentanaAbcc extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaClient = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        campoNombre = new javax.swing.JTextField();
+        campoAp = new javax.swing.JTextField();
+        campoTel = new javax.swing.JTextField();
+        campoRent = new javax.swing.JTextField();
+        botonAgregar = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        comboTipo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tablaClient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "clientNo", "fName", "lName", "telNo", "prefType", "maxRent", "email"
+                "clientNo", "fName", "lName", "telNo", "prefType", "maxRent"
             }
         ));
         jScrollPane2.setViewportView(tablaClient);
@@ -124,38 +123,98 @@ public class VentanaAbcc extends javax.swing.JFrame {
         jTextField1.setText("jTextField1");
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 110, 30));
 
-        jLabel1.setText("Agregar");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, 40, 40));
+        jTextField2.setEditable(false);
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 100, -1));
+
+        campoNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoNombreActionPerformed(evt);
+            }
+        });
+        campoNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoNombreKeyTyped(evt);
+            }
+        });
+        getContentPane().add(campoNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 110, 30));
+
+        campoAp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoApKeyTyped(evt);
+            }
+        });
+        getContentPane().add(campoAp, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 110, 30));
+
+        campoTel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoTelActionPerformed(evt);
+            }
+        });
+        getContentPane().add(campoTel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 100, 30));
+        getContentPane().add(campoRent, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 200, 100, 30));
+
+        botonAgregar.setText("Agregar");
+        botonAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botonAgregarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(botonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 50, 40));
 
         jLabel2.setText("Editar");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 40, 40, 40));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 50, 40));
 
         jLabel3.setText("Eliminar");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 40, 40));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 50, 40));
 
-        jTextField2.setText("jTextField2");
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
-
-        jTextField3.setText("jTextField3");
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, -1, -1));
-
-        jTextField4.setText("jTextField4");
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 180, -1, -1));
-
-        jTextField5.setText("jTextField5");
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, -1, -1));
-
-        jTextField6.setText("jTextField6");
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, -1, -1));
-
-        jTextField7.setText("jTextField7");
-        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, -1, -1));
-
-        jTextField8.setText("jTextField8");
-        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 180, -1, -1));
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Flat", "House" }));
+        getContentPane().add(comboTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 110, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void campoTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoTelActionPerformed
+
+    private void botonAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAgregarMouseClicked
+
+        if (campoNombre.getText().equals("")) {
+            
+        }else if(campoAp.getText().equals("")){
+            
+        }else if(campoTel.getText().equals("")){
+            
+        }else if(! (campoRent.getText().matches("[0-9]*"))  || campoRent.getText().equals("")){
+            System.out.println("entra");
+        }else {
+            Controlador.insertarCliente(campoNombre.getText(), campoAp.getText(), campoTel.getText(), comboTipo.getSelectedItem().toString(), campoRent.getText());
+        }
+        
+        
+    }//GEN-LAST:event_botonAgregarMouseClicked
+
+    private void campoNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNombreKeyTyped
+        
+        char validacion = evt.getKeyChar();
+        if (Character.isDigit(validacion)) {
+            getToolkit().beep(); 
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_campoNombreKeyTyped
+
+    private void campoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoNombreActionPerformed
+
+    private void campoApKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoApKeyTyped
+        char validacion = evt.getKeyChar();
+        if (Character.isDigit(validacion)) {
+            getToolkit().beep(); 
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoApKeyTyped
 
     /**
      * @param args the command line arguments
@@ -193,18 +252,17 @@ public class VentanaAbcc extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel botonAgregar;
+    private javax.swing.JTextField campoAp;
+    private javax.swing.JTextField campoNombre;
+    private javax.swing.JTextField campoRent;
+    private javax.swing.JTextField campoTel;
+    private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTable tablaClient;
     // End of variables declaration//GEN-END:variables
 }
