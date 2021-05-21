@@ -47,7 +47,6 @@ public class VentanaAbcc extends javax.swing.JFrame {
                 v.add(res.getString(4));
                 v.add(res.getString(5));
                 v.add(res.getInt(6));
-                v.add(res.getString(7));
                 modelo.addRow(v);
                 tablaClient.setModel(modelo);
                 
@@ -116,6 +115,11 @@ public class VentanaAbcc extends javax.swing.JFrame {
                 "clientNo", "fName", "lName", "telNo", "prefType", "maxRent"
             }
         ));
+        tablaClient.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaClientMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablaClient);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 750, 152));
@@ -215,6 +219,13 @@ public class VentanaAbcc extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_campoApKeyTyped
+
+    private void tablaClientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClientMouseClicked
+        
+        int acc = tablaClient.rowAtPoint(evt.getPoint());
+        campoNombre.setText(String.valueOf(tablaClient.getValueAt(acc, 1)));
+        
+    }//GEN-LAST:event_tablaClientMouseClicked
 
     /**
      * @param args the command line arguments
