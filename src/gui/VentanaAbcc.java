@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -91,7 +92,7 @@ public class VentanaAbcc extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaClient = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        campoClient = new javax.swing.JTextField();
         campoNombre = new javax.swing.JTextField();
         campoAp = new javax.swing.JTextField();
         campoTel = new javax.swing.JTextField();
@@ -127,8 +128,8 @@ public class VentanaAbcc extends javax.swing.JFrame {
         jTextField1.setText("jTextField1");
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 110, 30));
 
-        jTextField2.setEditable(false);
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 100, -1));
+        campoClient.setEditable(false);
+        getContentPane().add(campoClient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 100, -1));
 
         campoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,9 +167,24 @@ public class VentanaAbcc extends javax.swing.JFrame {
         getContentPane().add(botonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 50, 40));
 
         jLabel2.setText("Editar");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jLabel2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel2KeyPressed(evt);
+            }
+        });
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 50, 40));
 
         jLabel3.setText("Eliminar");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 50, 40));
 
         comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Flat", "House" }));
@@ -184,13 +200,14 @@ public class VentanaAbcc extends javax.swing.JFrame {
     private void botonAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAgregarMouseClicked
 
         if (campoNombre.getText().equals("")) {
-            
+            JOptionPane.showMessageDialog(null, "Revisar Nombre");
         }else if(campoAp.getText().equals("")){
-            
-        }else if(campoTel.getText().equals("")){
-            
+            JOptionPane.showMessageDialog(null, "Revisar Apellido");
+        }else if(! (campoTel.getText().matches("[0-9]*"))  || campoTel.getText().equals("") ||! (campoTel.getText().length() == 10)){       
+            JOptionPane.showMessageDialog(null, "Revisar Telefono 10 digitos");
         }else if(! (campoRent.getText().matches("[0-9]*"))  || campoRent.getText().equals("")){
             System.out.println("entra");
+            JOptionPane.showMessageDialog(null, "Revisar Renta");
         }else {
             Controlador.insertarCliente(campoNombre.getText(), campoAp.getText(), campoTel.getText(), comboTipo.getSelectedItem().toString(), campoRent.getText());
         }
@@ -223,10 +240,48 @@ public class VentanaAbcc extends javax.swing.JFrame {
     private void tablaClientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClientMouseClicked
         
         int acc = tablaClient.rowAtPoint(evt.getPoint());
+        campoClient.setText(String.valueOf(tablaClient.getValueAt(acc, 0)));
         campoNombre.setText(String.valueOf(tablaClient.getValueAt(acc, 1)));
-        
+        campoAp.setText(String.valueOf(tablaClient.getValueAt(acc, 2)));
+        campoTel.setText(String.valueOf(tablaClient.getValueAt(acc, 3)));
+        comboTipo.setSelectedItem(String.valueOf(tablaClient.getValueAt(acc, 4)));
+        campoRent.setText(String.valueOf(tablaClient.getValueAt(acc, 5)));
     }//GEN-LAST:event_tablaClientMouseClicked
 
+    private void jLabel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel2KeyPressed
+        
+        
+    }//GEN-LAST:event_jLabel2KeyPressed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        
+        if (campoNombre.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Revisar Nombre");
+        }else if(campoAp.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Revisar Apellido");
+        }else if(! (campoTel.getText().matches("[0-9]*"))  || campoTel.getText().equals("") ||! (campoTel.getText().length() == 10)){       
+            JOptionPane.showMessageDialog(null, "Revisar Telefono 10 digitos");
+        }else if(! (campoRent.getText().matches("[0-9]*"))  || campoRent.getText().equals("")){
+            System.out.println("entra");
+            JOptionPane.showMessageDialog(null, "Revisar Renta");
+        }else {
+            Controlador.editarCliente(campoNombre.getText(), campoAp.getText(), campoTel.getText(), comboTipo.getSelectedItem().toString(), campoRent.getText(),campoClient.getText());
+            
+        }
+        
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        
+        Controlador.borrarCliente(campoClient.getText());
+        
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+        private void reset() {                                     
+        
+        
+        
+    }    
     /**
      * @param args the command line arguments
      */
@@ -265,6 +320,7 @@ public class VentanaAbcc extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel botonAgregar;
     private javax.swing.JTextField campoAp;
+    private javax.swing.JTextField campoClient;
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoRent;
     private javax.swing.JTextField campoTel;
@@ -273,7 +329,6 @@ public class VentanaAbcc extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tablaClient;
     // End of variables declaration//GEN-END:variables
 }
