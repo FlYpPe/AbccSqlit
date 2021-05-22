@@ -251,7 +251,6 @@ public class VentanaAbcc extends javax.swing.JFrame {
     private void jLabel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel2KeyPressed
         
         
-        
     }//GEN-LAST:event_jLabel2KeyPressed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
