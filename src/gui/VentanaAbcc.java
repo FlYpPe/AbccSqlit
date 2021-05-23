@@ -59,17 +59,19 @@ public class VentanaAbcc extends javax.swing.JFrame {
     }
         public void CargarTablaEspecifica(String clave) throws SQLException{
             DefaultTableModel modelo = (DefaultTableModel) tablaClient.getModel();
+           
         modelo.setRowCount(0);
-        res = Controlador.buscarRegistro("Select * from client where clientNo ='" + clave +"'");
+        res = Controlador.buscarRegistro("Select * from client where clientNo like '%" + clave +"%' or fName like '%" + clave +"%' or lName like '%" + clave +"%' or telNo like '%" + clave +"%' or prefType like '%" + clave +"%' or maxRent like '%" + clave + "%'");
         
         try {
             while(res.next()){
                 Vector v = new Vector();
-                v.add(res.getString(1));
+                v.add(res.getInt(1));
                 v.add(res.getString(2));
-                v.add(res.getInt(3));
+                v.add(res.getString(3));
                 v.add(res.getString(4));
                 v.add(res.getString(5));
+                v.add(res.getInt(6));
                 modelo.addRow(v);
                 tablaClient.setModel(modelo);
                 
@@ -125,7 +127,19 @@ public class VentanaAbcc extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 750, 152));
 
-        jTextField1.setText("jTextField1");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 110, 30));
 
         campoClient.setEditable(false);
@@ -276,6 +290,24 @@ public class VentanaAbcc extends javax.swing.JFrame {
         Controlador.borrarCliente(campoClient.getText());
         
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        
+       
+        
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        try {
+            CargarTablaEspecifica(jTextField1.getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaAbcc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
 
         private void reset() {                                     
         
