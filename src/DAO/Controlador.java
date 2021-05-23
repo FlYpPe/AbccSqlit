@@ -19,8 +19,60 @@ import java.sql.SQLException;
  */
 public class Controlador {
 
-    public static void agregarRegistro(String sql) throws SQLException {
 
+        public static void editarView(String clientNo ,String propertyNo,String viewDate,String comment) {
+        Connection con = ConexionBase.getconn();
+        PreparedStatement ps = null;
+        try {
+           
+            String sql = "UPDATE views set propertyNo = ?, viewDate = ?, comment = ?  WHERE clientNo = ? ";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, propertyNo);
+            ps.setString(2, viewDate);
+            ps.setString(3, comment);
+            ps.setInt(4, Integer.parseInt(clientNo));
+            ps.execute();
+            System.out.println("Data has been updated");
+        } catch (SQLException e) {
+            // TODO: handle exception
+            System.out.println(e.toString());
+        }
+    }
+    
+    public static void borrarView(String clientNo){
+        Connection con = ConexionBase.getconn();
+        PreparedStatement ps = null;
+        try {
+            String sql = "DELETE FROM views where clientNo = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(clientNo));
+            ps.execute();
+            System.out.println("Data has been deleted!");
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            
+        }
+        
+        
+    }
+
+    public static void insertarView(String clientNo, String propertyNo,String viewDate,String comment) {
+        Connection con = ConexionBase.getconn();
+
+        PreparedStatement ps = null;
+        try {
+            String sql = "INSERT INTO views(clientNo, propertyNo, viewDate, comment) VALUES(?,?,?,?) ";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(clientNo));
+            ps.setString(2, propertyNo);
+            ps.setString(3, viewDate);
+            ps.setString(4, comment);
+            ps.execute();
+            System.out.println("Data has been inserted!");
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            // always remember to close database connections
+        }
     }
 
     public static void editarCliente(String fName, String lName, String telNo, String prefType, String maxRent, String clientNo) {
@@ -80,13 +132,8 @@ public class Controlador {
         }
     }
 
-    public static void modificarRegistro(String idOrden, String fecha, String cantidad, String tipoPago, String idMesero) throws SQLException {
 
-    }
 
-    public static void eliminarRegistro(String idOrden) throws SQLException {
-
-    }
 
     public static ResultSet buscarRegistro(String sql) throws SQLException {
 
