@@ -23,6 +23,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -39,12 +40,20 @@ public class Login extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         user = new javax.swing.JTextField();
         campoPass = new javax.swing.JPasswordField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Usuario");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 50, -1, -1));
 
+        Contraseña.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        Contraseña.setForeground(new java.awt.Color(255, 255, 255));
         Contraseña.setText("Contraseña");
+        getContentPane().add(Contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 120, -1, -1));
 
         jButton1.setText("Validar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -57,45 +66,18 @@ public class Login extends javax.swing.JFrame {
                 jButton1KeyPressed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
+        getContentPane().add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 75, 101, -1));
 
         campoPass.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 campoPassKeyPressed(evt);
             }
         });
+        getContentPane().add(campoPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 145, 101, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(204, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(131, 131, 131))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Contraseña)
-                    .addComponent(jLabel1)
-                    .addComponent(user, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                    .addComponent(campoPass))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(Contraseña)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(campoPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(106, Short.MAX_VALUE))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_log.png"))); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 280));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -107,7 +89,7 @@ public class Login extends javax.swing.JFrame {
             String sql = "select * from user where user = '" + user.getText() + "'";
         try {
             if (Controlador.validar(sql, campoPass.getText())) {
-                VentanaClientes vent = new VentanaClientes();
+                VentanaVista vent = new VentanaVista();
                 vent.setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(null, "Conexión fallida");
@@ -122,6 +104,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+
         
         
         
@@ -135,7 +118,7 @@ public class Login extends javax.swing.JFrame {
         try {
             if (Controlador.validar(sql, campoPass.getText())) {
                 
-                VentanaClientes vent = new VentanaClientes();
+                VentanaVista vent = new VentanaVista();
                  
                 vent.setVisible(true);
                  
@@ -190,6 +173,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField campoPass;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables
 }

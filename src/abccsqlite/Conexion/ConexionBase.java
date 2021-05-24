@@ -17,11 +17,11 @@ public class ConexionBase {
             try {
 
                 Class.forName("org.sqlite.JDBC");
-                con = DriverManager.getConnection("jdbc:sqlite:C:/Users/Felipe/Documents/NetBeansProjects/AbccSqlit/src/BaseDatos.db"); // connecting to our database
+                con = DriverManager.getConnection("jdbc:sqlite:C:/Users/Felipe/Documents/NetBeansProjects/AbccSqlit/src/BaseDatos.db");
                 System.out.println("Connected!");
             } catch (ClassNotFoundException | SQLException e) {
 
-                System.out.println(e + "");
+                System.out.println(e);
             }
         }
 

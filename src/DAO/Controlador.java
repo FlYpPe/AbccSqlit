@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package DAO;
 
 import abccsqlite.Conexion.ConexionBase;
@@ -25,12 +21,12 @@ public class Controlador {
         PreparedStatement ps = null;
         try {
            
-            String sql = "UPDATE views set propertyNo = ?, viewDate = ?, comment = ?  WHERE clientNo = ? ";
+            String sql = "UPDATE views set clientNo = ?, viewDate = ?, comment = ?  WHERE propertyNo = ? ";
             ps = con.prepareStatement(sql);
-            ps.setString(1, propertyNo);
+            ps.setString(4, propertyNo);
             ps.setString(2, viewDate);
             ps.setString(3, comment);
-            ps.setInt(4, Integer.parseInt(clientNo));
+            ps.setInt(1, Integer.parseInt(clientNo));
             ps.execute();
             System.out.println("Data has been updated");
         } catch (SQLException e) {
@@ -39,13 +35,13 @@ public class Controlador {
         }
     }
     
-    public static void borrarView(String clientNo){
+    public static void borrarView(String propertyNo){
         Connection con = ConexionBase.getconn();
         PreparedStatement ps = null;
         try {
-            String sql = "DELETE FROM views where clientNo = ?";
+            String sql = "DELETE FROM views where propertyNo = ?";
             ps = con.prepareStatement(sql);
-            ps.setInt(1, Integer.parseInt(clientNo));
+            ps.setString(1, propertyNo);
             ps.execute();
             System.out.println("Data has been deleted!");
         } catch (SQLException e) {
