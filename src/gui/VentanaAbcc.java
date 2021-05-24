@@ -103,8 +103,10 @@ public class VentanaAbcc extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         comboTipo = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 51, 51));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tablaClient.setModel(new javax.swing.table.DefaultTableModel(
@@ -204,6 +206,9 @@ public class VentanaAbcc extends javax.swing.JFrame {
         comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Flat", "House" }));
         getContentPane().add(comboTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 110, 30));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco.jpg"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 420));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -223,12 +228,30 @@ public class VentanaAbcc extends javax.swing.JFrame {
             System.out.println("entra");
             JOptionPane.showMessageDialog(null, "Revisar Renta");
         }else {
+            try {
+                
+                
             Controlador.insertarCliente(campoNombre.getText(), campoAp.getText(), campoTel.getText(), comboTipo.getSelectedItem().toString(), campoRent.getText());
+            
+            restaurar();
+                CargarTabla();
+                JOptionPane.showMessageDialog(null, "Agregado Correctamente");
+            } catch (SQLException ex) {
+                Logger.getLogger(VentanaAbcc.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         
     }//GEN-LAST:event_botonAgregarMouseClicked
 
+    private void restaurar(){
+        campoClient.setText("");
+        campoNombre.setText("");
+        campoAp.setText("");
+        campoRent.setText("");
+        campoTel.setText("");
+    }
+    
     private void campoNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNombreKeyTyped
         
         char validacion = evt.getKeyChar();
@@ -279,8 +302,14 @@ public class VentanaAbcc extends javax.swing.JFrame {
             System.out.println("entra");
             JOptionPane.showMessageDialog(null, "Revisar Renta");
         }else {
-            Controlador.editarCliente(campoNombre.getText(), campoAp.getText(), campoTel.getText(), comboTipo.getSelectedItem().toString(), campoRent.getText(),campoClient.getText());
-            
+            try {
+                Controlador.editarCliente(campoNombre.getText(), campoAp.getText(), campoTel.getText(), comboTipo.getSelectedItem().toString(), campoRent.getText(),campoClient.getText());
+                restaurar();
+                CargarTabla();
+                JOptionPane.showMessageDialog(null, "Editado Correctamente");
+            } catch (SQLException ex) {
+                Logger.getLogger(VentanaAbcc.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }//GEN-LAST:event_jLabel2MouseClicked
@@ -357,6 +386,7 @@ public class VentanaAbcc extends javax.swing.JFrame {
     private javax.swing.JTextField campoRent;
     private javax.swing.JTextField campoTel;
     private javax.swing.JComboBox<String> comboTipo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;

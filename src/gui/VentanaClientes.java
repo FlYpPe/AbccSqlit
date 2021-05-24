@@ -73,8 +73,7 @@ public class VentanaClientes extends javax.swing.JFrame {
                 
             }
         } catch (SQLException e) {
-            
-            
+
         }
     }
 
@@ -99,8 +98,9 @@ public class VentanaClientes extends javax.swing.JFrame {
         comboA = new javax.swing.JComboBox<>();
         comboMes = new javax.swing.JComboBox<>();
         comboClient = new javax.swing.JComboBox<>();
+        comboPro = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tablaView.setModel(new javax.swing.table.DefaultTableModel(
@@ -139,11 +139,21 @@ public class VentanaClientes extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 50, 40));
 
         jLabel2.setText("Editar");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 50, 40));
 
         jLabel3.setText("Eliminar");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, 50, 40));
-        getContentPane().add(campoProperty, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 190, 80, -1));
+        getContentPane().add(campoProperty, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 80, -1));
 
         campoCome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,18 +178,22 @@ public class VentanaClientes extends javax.swing.JFrame {
         });
         getContentPane().add(comboClient, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, 80, -1));
 
+        comboPro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DA", "OP", "FT", "AS" }));
+        getContentPane().add(comboPro, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 190, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
        
-        if (campoProperty.getText().equals("")) {
+        if (! (campoProperty.getText().matches("[0-9]*"))  || campoProperty.getText().equals("") || ! (campoProperty.getText().length() == 5))  {
             JOptionPane.showMessageDialog(null, "Revisar propertyNo");
         }else if(campoCome.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Revisar comment");
         }else {
             String fecha = comboDia.getSelectedItem().toString() + "/" + comboMes.getSelectedItem().toString() + "/" + comboA.getSelectedItem().toString();
-            Controlador.insertarView(comboClient.getSelectedItem().toString(),campoProperty.getText(), fecha, campoCome.getText());
+            String prop = comboPro.getSelectedItem().toString() + campoProperty.getText();
+            Controlador.insertarView(comboClient.getSelectedItem().toString(), prop, fecha, campoCome.getText());
         }
         
     }//GEN-LAST:event_jLabel1MouseClicked
@@ -198,7 +212,8 @@ public class VentanaClientes extends javax.swing.JFrame {
         int acc = tablaView.rowAtPoint(evt.getPoint());
         System.out.println(String.valueOf(tablaView.getValueAt(acc, 0)));
         comboClient.setSelectedItem(String.valueOf(tablaView.getValueAt(acc, 0)));
-        campoProperty.setText(String.valueOf(tablaView.getValueAt(acc, 1)));
+        campoProperty.setText(String.valueOf(tablaView.getValueAt(acc, 1)).substring(2, 7));
+        comboPro.setSelectedItem(String.valueOf(tablaView.getValueAt(acc, 1)).substring(0, 2));
         comboDia.setSelectedItem(String.valueOf(tablaView.getValueAt(acc, 2)).substring(0, 2));
         comboMes.setSelectedItem(String.valueOf(tablaView.getValueAt(acc, 2)).substring(3, 5));
         comboA.setSelectedItem(String.valueOf(tablaView.getValueAt(acc, 2)).substring(6, 8));
@@ -215,6 +230,39 @@ public class VentanaClientes extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+
+        try {
+           if (campoProperty.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Revisar propertyNo");
+        }else if(campoCome.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Revisar comment");
+        }else {
+            String fecha = comboDia.getSelectedItem().toString() + "/" + comboMes.getSelectedItem().toString() + "/" + comboA.getSelectedItem().toString();
+            String prop = comboPro.getSelectedItem().toString() + campoProperty.getText();
+            Controlador.editarView(comboClient.getSelectedItem().toString(),prop, fecha, campoCome.getText());
+        } 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Revisar información");
+        }
+        
+        
+        
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+
+        try {
+            String prop = comboPro.getSelectedItem().toString() + campoProperty.getText();
+        Controlador.borrarView(prop);
+        CargarTabla();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Revisar información");
+        }
+        
+        
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -258,6 +306,7 @@ public class VentanaClientes extends javax.swing.JFrame {
                 comboClient.addItem(String.valueOf(res.getInt(1)));
                                 
             }
+            
         } catch (SQLException e) {
             
             
@@ -271,6 +320,7 @@ public class VentanaClientes extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboClient;
     private javax.swing.JComboBox<String> comboDia;
     private javax.swing.JComboBox<String> comboMes;
+    private javax.swing.JComboBox<String> comboPro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
