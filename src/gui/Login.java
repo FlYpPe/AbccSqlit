@@ -7,6 +7,7 @@ package gui;
 
 import DAO.Controlador;
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,7 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         Contraseña = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         user = new javax.swing.JTextField();
@@ -49,6 +51,14 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Usuario");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 50, -1, -1));
+
+        jLabel3.setText("Registrarse");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, -1, -1));
 
         Contraseña.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         Contraseña.setForeground(new java.awt.Color(255, 255, 255));
@@ -85,20 +95,25 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         
-       
-            String sql = "select * from user where user = '" + user.getText() + "'";
+       if(campoPass.getText().equals("") || user.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Revisar campos");
+            }else {
+                String sql = "select pass from user where user = '" + user.getText() + "'";
+            System.out.println(sql);
         try {
-            if (Controlador.validar(sql, campoPass.getText())) {
+            if (Controlador.validar(sql, campoPass.getText())) {               
                 VentanaVista vent = new VentanaVista();
                 vent.setVisible(true);
+                 
             }else{
+                
                 JOptionPane.showMessageDialog(null, "Conexión fallida");
                 campoPass.setText("");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+            }
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -113,13 +128,15 @@ public class Login extends javax.swing.JFrame {
     private void campoPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPassKeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            String sql = "select * from user where user = '" + user.getText() + "'";
-            System.out.println(sql);
+            
+            if(campoPass.getText().equals("") || user.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Revisar campos");
+            }else {
+                String sql = "select * from user where user = '" + user.getText() + "'";
+            
         try {
-            if (Controlador.validar(sql, campoPass.getText())) {
-                
+            if (Controlador.validar(sql, campoPass.getText())) {               
                 VentanaVista vent = new VentanaVista();
-                 
                 vent.setVisible(true);
                  
             }else{
@@ -130,8 +147,35 @@ public class Login extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+            }
+            
         }
     }//GEN-LAST:event_campoPassKeyPressed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+
+
+        if(user.getText().equals("") || campoPass.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Revisar campos");
+        }else{
+            
+            try {
+        
+            
+            if ((Controlador.revisarexitencia("select user from user where user = '" + user.getText().trim() + "'"))){
+                    
+                Controlador.ingresarRegistro("insert into user (user, pass) values ('" + user.getText() +"', '" + campoPass.getText() + "')");
+                   
+            }else{
+               
+            }
+        } catch (SQLException ex) {
+            
+        }
+            
+        }
+                
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -174,6 +218,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables
 }
