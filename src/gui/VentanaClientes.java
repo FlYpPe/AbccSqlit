@@ -25,7 +25,7 @@ public class VentanaClientes extends javax.swing.JFrame {
      */
     public VentanaClientes() {
         initComponents();
-                try {
+        try {
             CargarTabla();
             llenarcombo();
         } catch (SQLException ex) {
@@ -33,13 +33,13 @@ public class VentanaClientes extends javax.swing.JFrame {
         }
         this.setLocationRelativeTo(null);
     }
-        
-        public void CargarTabla() throws SQLException{
+
+    public void CargarTabla() throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel) tablaView.getModel();
-        modelo.setRowCount(0); 
+        modelo.setRowCount(0);
         res = Controlador.buscarRegistro("Select * from views");
         try {
-            while(res.next()){
+            while (res.next()) {
                 Vector v = new Vector();
                 v.add(res.getInt(1));
                 v.add(res.getString(2));
@@ -47,22 +47,21 @@ public class VentanaClientes extends javax.swing.JFrame {
                 v.add(res.getString(4));
                 modelo.addRow(v);
                 tablaView.setModel(modelo);
-                
+
             }
         } catch (SQLException e) {
-            
-            
+
         }
     }
 
-                public void CargarTablaEspecifica(String clave) throws SQLException{
-            DefaultTableModel modelo = (DefaultTableModel) tablaView.getModel();
-           
+    public void CargarTablaEspecifica(String clave) throws SQLException {
+        DefaultTableModel modelo = (DefaultTableModel) tablaView.getModel();
+
         modelo.setRowCount(0);
-        res = Controlador.buscarRegistro("Select * from views where clientNo like '%" + clave +"%' or propertyNo like '%" + clave +"%' or viewDate like '%" + clave +"%' or comment like '%" + clave +"%'");
-        
+        res = Controlador.buscarRegistro("Select * from views where clientNo like '%" + clave + "%' or propertyNo like '%" + clave + "%' or viewDate like '%" + clave + "%' or comment like '%" + clave + "%'");
+
         try {
-            while(res.next()){
+            while (res.next()) {
                 Vector v = new Vector();
                 v.add(res.getInt(1));
                 v.add(res.getString(2));
@@ -70,7 +69,7 @@ public class VentanaClientes extends javax.swing.JFrame {
                 v.add(res.getString(4));
                 modelo.addRow(v);
                 tablaView.setModel(modelo);
-                
+
             }
         } catch (SQLException e) {
 
@@ -89,6 +88,7 @@ public class VentanaClientes extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaView = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -99,6 +99,7 @@ public class VentanaClientes extends javax.swing.JFrame {
         comboMes = new javax.swing.JComboBox<>();
         comboClient = new javax.swing.JComboBox<>();
         comboPro = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -128,7 +129,10 @@ public class VentanaClientes extends javax.swing.JFrame {
                 jTextField1KeyReleased(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 110, 30));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 110, 30));
+
+        jLabel5.setText("Filtrar");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
 
         jLabel1.setText("Agregar");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -181,22 +185,44 @@ public class VentanaClientes extends javax.swing.JFrame {
         comboPro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DA", "OP", "FT", "AS" }));
         getContentPane().add(comboPro, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 190, -1, -1));
 
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco.jpg"))); // NOI18N
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 370));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-       
-        if (! (campoProperty.getText().matches("[0-9]*"))  || campoProperty.getText().equals("") || ! (campoProperty.getText().length() == 5))  {
-            JOptionPane.showMessageDialog(null, "Revisar propertyNo");
-        }else if(campoCome.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Revisar comment");
-        }else {
-            String fecha = comboDia.getSelectedItem().toString() + "/" + comboMes.getSelectedItem().toString() + "/" + comboA.getSelectedItem().toString();
-            String prop = comboPro.getSelectedItem().toString() + campoProperty.getText();
-            Controlador.insertarView(comboClient.getSelectedItem().toString(), prop, fecha, campoCome.getText());
+
+        String pro = comboPro.getSelectedItem().toString() + campoProperty.getText();
+        try {
+            if (Controlador.revisarexitencia("select propertyNo from views where propertyNo = '" + pro + "'")) {
+
+            } else if (!(campoProperty.getText().matches("[0-9]*")) || campoProperty.getText().equals("") || !(campoProperty.getText().length() == 5)) {
+                JOptionPane.showMessageDialog(null, "Revisar propertyNo");
+            } else if (campoCome.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Revisar comment");
+            } else {
+                String fecha = comboDia.getSelectedItem().toString() + "/" + comboMes.getSelectedItem().toString() + "/" + comboA.getSelectedItem().toString();
+                String prop = comboPro.getSelectedItem().toString() + campoProperty.getText();
+                Controlador.insertarView(comboClient.getSelectedItem().toString(), prop, fecha, campoCome.getText());
+                try {
+                    CargarTabla();
+                    restaura();
+                } catch (SQLException ex) {
+
+                }
+
+            }
+        } catch (SQLException ex) {
+
         }
-        
+
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void restaura() {
+        campoProperty.setText("");
+        campoCome.setText("");
+    }
 
     private void campoComeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoComeActionPerformed
         // TODO add your handling code here:
@@ -208,9 +234,8 @@ public class VentanaClientes extends javax.swing.JFrame {
 
     private void tablaViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaViewMouseClicked
 
-
         int acc = tablaView.rowAtPoint(evt.getPoint());
-        System.out.println(String.valueOf(tablaView.getValueAt(acc, 0)));
+       
         comboClient.setSelectedItem(String.valueOf(tablaView.getValueAt(acc, 0)));
         campoProperty.setText(String.valueOf(tablaView.getValueAt(acc, 1)).substring(2, 7));
         comboPro.setSelectedItem(String.valueOf(tablaView.getValueAt(acc, 1)).substring(0, 2));
@@ -218,7 +243,7 @@ public class VentanaClientes extends javax.swing.JFrame {
         comboMes.setSelectedItem(String.valueOf(tablaView.getValueAt(acc, 2)).substring(3, 5));
         comboA.setSelectedItem(String.valueOf(tablaView.getValueAt(acc, 2)).substring(6, 8));
         campoCome.setText(String.valueOf(tablaView.getValueAt(acc, 3)));
-        
+
     }//GEN-LAST:event_tablaViewMouseClicked
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
@@ -228,40 +253,55 @@ public class VentanaClientes extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(VentanaAbcc.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
 
+        String pro = comboPro.getSelectedItem().toString() + campoProperty.getText();
+
         try {
-           if (campoProperty.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Revisar propertyNo");
-        }else if(campoCome.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Revisar comment");
-        }else {
-            String fecha = comboDia.getSelectedItem().toString() + "/" + comboMes.getSelectedItem().toString() + "/" + comboA.getSelectedItem().toString();
-            String prop = comboPro.getSelectedItem().toString() + campoProperty.getText();
-            Controlador.editarView(comboClient.getSelectedItem().toString(),prop, fecha, campoCome.getText());
-        } 
+            if (campoProperty.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Revisar propertyNo");
+            } else if (campoCome.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Revisar comment");
+            } else if (Controlador.revisarexitencia("select propertyNo from views where propertyNo = '" + pro + "'")) {
+                    JOptionPane.showMessageDialog(null, "Registro no existente");
+            } else {
+                String fecha = comboDia.getSelectedItem().toString() + "/" + comboMes.getSelectedItem().toString() + "/" + comboA.getSelectedItem().toString();
+                String prop = comboPro.getSelectedItem().toString() + campoProperty.getText();
+                Controlador.editarView(comboClient.getSelectedItem().toString(), prop, fecha, campoCome.getText());
+                try {
+                    CargarTabla();
+                    restaura();
+                } catch (SQLException ex) {
+
+                }
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Revisar información");
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
 
         try {
             String prop = comboPro.getSelectedItem().toString() + campoProperty.getText();
-        Controlador.borrarView(prop);
-        CargarTabla();
+            Controlador.borrarView(prop);
+
+            try {
+                CargarTabla();
+                restaura();
+            } catch (SQLException ex) {
+
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Revisar información");
         }
-        
-        
+
+
     }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
@@ -298,18 +338,17 @@ public class VentanaClientes extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void llenarcombo() throws SQLException{
+
+    private void llenarcombo() throws SQLException {
         res = Controlador.buscarRegistro("Select clientNo from client");
         try {
-            while(res.next()){
+            while (res.next()) {
                 comboClient.addItem(String.valueOf(res.getInt(1)));
-                                
+
             }
-            
+
         } catch (SQLException e) {
-            
-            
+
         }
     }
 
@@ -324,6 +363,8 @@ public class VentanaClientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tablaView;

@@ -19,6 +19,9 @@ public class VentanaVista extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,10 +48,20 @@ public class VentanaVista extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         jLabel4.setText("Vistas");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 90, 50));
 
         jLabel6.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         jLabel6.setText("Graficas");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 100, 50));
 
         jLabel3.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
@@ -90,10 +103,22 @@ public class VentanaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void ViewsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ViewsMouseClicked
-         VentanaClientes vent = new VentanaClientes();
-                 
+         VentanaClientes vent = new VentanaClientes();                
                 vent.setVisible(true);
     }//GEN-LAST:event_ViewsMouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+
+
+        VistaVent vent = new VistaVent();
+                vent.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        Grafica vent = new Grafica();
+        vent.setVisible(true);
+    }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
      * @param args the command line arguments

@@ -94,6 +94,7 @@ public class VentanaAbcc extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaClient = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         campoClient = new javax.swing.JTextField();
         campoNombre = new javax.swing.JTextField();
         campoAp = new javax.swing.JTextField();
@@ -143,6 +144,9 @@ public class VentanaAbcc extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 110, 30));
+
+        jLabel4.setText("Filtrar");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
         campoClient.setEditable(false);
         getContentPane().add(campoClient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 100, -1));
@@ -218,6 +222,11 @@ public class VentanaAbcc extends javax.swing.JFrame {
 
     private void botonAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAgregarMouseClicked
 
+        
+        
+        if(false){
+            
+        }
         if (campoNombre.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Revisar Nombre");
         }else if(campoAp.getText().equals("")){
@@ -316,7 +325,25 @@ public class VentanaAbcc extends javax.swing.JFrame {
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         
-        Controlador.borrarCliente(campoClient.getText());
+        if(campoClient.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Revisar infromación");
+        }else{
+            try {
+            Controlador.borrarCliente(campoClient.getText());
+        restaurar();
+            CargarTabla();
+            JOptionPane.showMessageDialog(null, "Eliminado Correctamente");
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaAbcc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        }
+        
+
+
+
+
+        
         
     }//GEN-LAST:event_jLabel3MouseClicked
 
@@ -389,6 +416,7 @@ public class VentanaAbcc extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tablaClient;
