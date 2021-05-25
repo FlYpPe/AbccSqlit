@@ -1,4 +1,3 @@
-
 package DAO;
 
 import abccsqlite.Conexion.ConexionBase;
@@ -8,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,12 +15,11 @@ import java.sql.SQLException;
  */
 public class Controlador {
 
-
-        public static void editarView(String clientNo ,String propertyNo,String viewDate,String comment) {
+    public static void editarView(String clientNo, String propertyNo, String viewDate, String comment) {
         Connection con = ConexionBase.getconn();
         PreparedStatement ps = null;
         try {
-           
+
             String sql = "UPDATE views set clientNo = ?, viewDate = ?, comment = ?  WHERE propertyNo = ? ";
             ps = con.prepareStatement(sql);
             ps.setString(4, propertyNo);
@@ -28,14 +27,12 @@ public class Controlador {
             ps.setString(3, comment);
             ps.setInt(1, Integer.parseInt(clientNo));
             ps.execute();
-            System.out.println("Data has been updated");
         } catch (SQLException e) {
             // TODO: handle exception
-            System.out.println(e.toString());
         }
     }
-    
-    public static void borrarView(String propertyNo){
+
+    public static void borrarView(String propertyNo) {
         Connection con = ConexionBase.getconn();
         PreparedStatement ps = null;
         try {
@@ -43,16 +40,13 @@ public class Controlador {
             ps = con.prepareStatement(sql);
             ps.setString(1, propertyNo);
             ps.execute();
-            System.out.println("Data has been deleted!");
         } catch (SQLException e) {
-            System.out.println(e.toString());
-            
+
         }
-        
-        
+
     }
 
-    public static void insertarView(String clientNo, String propertyNo,String viewDate,String comment) {
+    public static void insertarView(String clientNo, String propertyNo, String viewDate, String comment) {
         Connection con = ConexionBase.getconn();
 
         PreparedStatement ps = null;
@@ -64,10 +58,7 @@ public class Controlador {
             ps.setString(3, viewDate);
             ps.setString(4, comment);
             ps.execute();
-            System.out.println("Data has been inserted!");
         } catch (SQLException e) {
-            System.out.println(e.toString());
-            // always remember to close database connections
         }
     }
 
@@ -84,14 +75,12 @@ public class Controlador {
             ps.setInt(5, Integer.parseInt(maxRent));
             ps.setInt(6, Integer.parseInt(clientNo));
             ps.execute();
-            System.out.println("Data has been updated");
         } catch (SQLException e) {
             // TODO: handle exception
-            System.out.println(e.toString());
         }
     }
-    
-    public static void borrarCliente(String clientNo){
+
+    public static void borrarCliente(String clientNo) {
         Connection con = ConexionBase.getconn();
         PreparedStatement ps = null;
         try {
@@ -99,13 +88,10 @@ public class Controlador {
             ps = con.prepareStatement(sql);
             ps.setInt(1, Integer.parseInt(clientNo));
             ps.execute();
-            System.out.println("Data has been inserted!");
         } catch (SQLException e) {
-            System.out.println(e.toString());
             // always remember to close database connections
         }
-        
-        
+
     }
 
     public static void insertarCliente(String fName, String lName, String telNo, String prefType, String maxRent) {
@@ -121,21 +107,34 @@ public class Controlador {
             ps.setString(4, prefType);
             ps.setInt(5, Integer.parseInt(maxRent));
             ps.execute();
-            System.out.println("Data has been inserted!");
         } catch (SQLException e) {
-            System.out.println(e.toString());
             // always remember to close database connections
         }
     }
 
-
-
-
     public static ResultSet buscarRegistro(String sql) throws SQLException {
 
         PreparedStatement ps = ConexionBase.getconn().prepareStatement(sql);
+        
         ResultSet rs = ps.executeQuery();
+
         return rs;
+
+    }
+
+    public static void ingresarRegistro(String sql) {
+        
+        Connection con = ConexionBase.getconn();
+        PreparedStatement ps = null;
+        try {
+
+            ps = con.prepareStatement(sql);
+            
+            ps.execute();
+           
+        } catch (SQLException e) {
+          
+        }
 
     }
 
@@ -145,22 +144,28 @@ public class Controlador {
         ResultSet rs = ps.executeQuery();
         String pass = "";
         while (rs.next()) {
-            String user = rs.getString("user");
             pass = rs.getString("pass");
 
-            System.out.println("user: " + user);
-            System.out.println("pass: " + pass);
-
         }
-        System.out.println(pass);
-        System.out.println(passw);
         if (passw.equals(pass)) {
-            System.out.println("qqqqq");
             return true;
         }
-        System.out.println("false");
         return false;
 
+    }
+
+    public static boolean revisarexitencia(String sql) throws SQLException {
+
+        PreparedStatement ps = ConexionBase.getconn().prepareStatement(sql);
+        
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            JOptionPane.showMessageDialog(null, "Registro existente");
+            
+            return false;
+        }
+        
+        return true;
     }
 
 }

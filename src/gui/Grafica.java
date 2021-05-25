@@ -37,6 +37,8 @@ public class Grafica extends javax.swing.JFrame {
         }
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,7 +52,7 @@ public class Grafica extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaGrafica = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Crear Graficas");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
